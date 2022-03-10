@@ -40,6 +40,9 @@ const createCard = (data, img, p) => {
 };
 fetchData();
 
+const searchPokemons = () => {
+  const input = document.querySelector("#search").value;
+};
 fetch("https://pokeapi.co/api/v2/pokemon/1/")
   .then((res) => res.json())
   .then((data) => console.log(data.sprites.other.dream_world.front_default));

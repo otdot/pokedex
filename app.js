@@ -14,7 +14,6 @@ const fetchData = () => {
             item.sprites.other.dream_world.front_default,
             item.types[0].type.name
           );
-          console.log(item.sprites.other.dream_world.front_default);
         })
       );
     });
@@ -42,7 +41,23 @@ fetchData();
 
 const searchPokemons = () => {
   const input = document.querySelector("#search").value;
+  document.querySelector(".cards").innerHTML = "";
+  fetch("https://pokeapi.co/api/v2/pokemon/?limit=50&offset=0/")
+    .then((response) => response.json())
+    .then((data) => {
+      const fetchAll = data.results.map((pokemon) =>
+        fetch(pokemon.url).then((res) => res.json())
+      );
+      Promise.all(fetchAll).then((data) => {
+        data.forEach((item) => {
+          if (item.name.includes(input))
+            createCard(
+              item.name,
+              item.sprites.other.dream_world.front_default,
+              item.types[0].type.name
+            );
+        });
+      });
+    });
 };
-fetch("https://pokeapi.co/api/v2/pokemon/1/")
-  .then((res) => res.json())
-  .then((data) => console.log(data.sprites.other.dream_world.front_default));
+document.querySelector("#button").addEventListener("click", searchPokemons);

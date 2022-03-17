@@ -22,7 +22,9 @@ const fetchData = () => {
 // item.sprites.other.dream_world.front_default, item.name item.types[0].type
 const createCard = (data, img, p) => {
   const div = document.createElement("div");
+  const contDiv = document.createElement("div");
   div.className = "card";
+  contDiv.className = "contDiv";
   const paragraph = document.createElement("p");
   const h1 = document.createElement("h1");
   const image = document.createElement("img");
@@ -32,14 +34,15 @@ const createCard = (data, img, p) => {
   h1.appendChild(h1content);
   paragraph.appendChild(pcontent);
   div.appendChild(image);
-  div.appendChild(h1);
-  div.appendChild(paragraph);
+  contDiv.appendChild(h1);
+  contDiv.appendChild(paragraph);
+  div.appendChild(contDiv);
 
   cards.appendChild(div);
 };
 fetchData();
 
-const searchPokemons = () => {
+const searchPokemons = (e) => {
   const input = document.querySelector("#search").value;
   document.querySelector(".cards").innerHTML = "";
   fetch("https://pokeapi.co/api/v2/pokemon/?limit=50&offset=0/")
@@ -60,4 +63,6 @@ const searchPokemons = () => {
       });
     });
 };
-document.querySelector("#button").addEventListener("click", searchPokemons);
+
+const searchInput = document.querySelector("#search");
+searchInput.addEventListener("keyup", searchPokemons);
